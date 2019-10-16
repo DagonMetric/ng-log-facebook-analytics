@@ -1,0 +1,15 @@
+version: '{build}'
+image: 'Visual Studio 2019'
+clone_depth: 1
+environment:
+  nodejs_version: "10"
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - yarn install --frozen-lockfile --non-interactive
+build_script:
+  - yarn build
+test_script:
+  - yarn test -c=ci
+cache:
+  - node_modules -> yarn.lock
+  - "%LOCALAPPDATA%\\Yarn"
