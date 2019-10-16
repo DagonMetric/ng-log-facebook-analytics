@@ -23,5 +23,8 @@ jobs:
         yarn build
         yarn test -c=ci
         yarn lint
+        yarn global add codecov
+        codecov --disable=gcov -f dist/coverage/ng-log-facebook-analytics/lcov.info -F unit
       env:
         CI: true
+        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
