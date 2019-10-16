@@ -1,7 +1,7 @@
 {
   "name": "@dagonmetric/ng-log-facebook-analytics",
   "version": "0.0.0-PLACEHOLDER",
-  "description": "Facebook Pixel Analytics implementation for @dagonmetric/ng-log - vendor-agnostic logging, analytics and telemetry service abstractions for Angular applications.",
+  "description": "Angular Facebook Pixel Analytics implementation for @dagonmetric/ng-log.",
   "author": "DagonMetric",
   "license": "MIT",
   "repository": {
@@ -14,18 +14,19 @@
   "homepage": "https://github.com/dagonmetric/ng-log-facebook-analytics#readme",
   "keywords": [
     "ng-log",
-    "angular-analytics",
     "angular-facebook-pixel",
+    "angular-facebook-analytics",
     "facebook-pixel",
     "facebook-analytics",
-    "angular-log-service",
+    "angular-analytics",
     "angular-logging",
     "angular-log",
-    "angular-telemetry-client",
+    "angular-log-service",
+    "angular-telemetry-service",
     "analytics",
     "logging",
     "log",
-    "telemetry-client",
+    "telemetry-service",
     "telemetry",
     "angular"
   ],
