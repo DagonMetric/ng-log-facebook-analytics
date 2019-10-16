@@ -11,9 +11,11 @@ Facebook Pixel Analytics implementation for [@dagonmetric/ng-log](https://github
 
 The following npm packages are required before using this module.
 
-* @dagonmetric/ng-log >= v2.2.0 [npm](https://www.npmjs.com/package/@dagonmetric/ng-log)
+* @dagonmetric/ng-log >= v2.2.0 - [npm](https://www.npmjs.com/package/@dagonmetric/ng-log)/[github package](https://github.com/DagonMetric/ng-log-facebook-analytics/packages)
 
-### Add Facebook JavaScript SDK or Facebook Pixel Code Snippet
+### Add Facebook Pixel or Facebook JavaScript SDK Code Snippet
+
+You can use either Facebook Pixel or Facebook JavaScript SDK to log events.
 
 #### To Add Facebook Pixel
 
@@ -117,7 +119,7 @@ export class AppComponent implements OnInit {
 
 ## Related Projects
 
-* [ng-log](https://github.com/DagonMetric/ng-log) -vendor-agnostic logging, analytics and telemetry service abstractions and some implementations
+* [ng-log](https://github.com/DagonMetric/ng-log) - Vendor-agnostic logging, analytics and telemetry service abstractions and some implementations
 * [ng-log-applicationinsights](https://github.com/DagonMetric/ng-log-applicationinsights) - Microsoft Azure Application Insights implementation for `ng-log`
 * [ng-log-firebase-analytics](https://github.com/DagonMetric/ng-log-firebase-analytics) - Firebase Analytics implementation for `ng-log`
 * [ng-log-gtag](https://github.com/DagonMetric/ng-log-gtag) - Angular Google Analytics (gtag.js) logger implementation for `ng-log`
