@@ -13,22 +13,22 @@
   },
   "homepage": "https://github.com/dagonmetric/ng-log-facebook-analytics#readme",
   "keywords": [
-    "ng-log",
     "angular-facebook-pixel",
     "angular-facebook-analytics",
     "facebook-pixel",
     "facebook-analytics",
     "angular-analytics",
+    "angular-logging-service",
     "angular-logging",
     "angular-log",
-    "angular-log-service",
-    "angular-telemetry-service",
+    "angular-telemetry-client",
     "analytics",
     "logging",
     "log",
-    "telemetry-service",
+    "telemetry-client",
     "telemetry",
-    "angular"
+    "angular",
+    "typescript"
   ],
   "sideEffects": false,
   "dependencies": {
