@@ -1,20 +1,14 @@
-# Angular Facebook Pixel Analytics Implementation for NG-LOG
+# Angular Facebook Pixel Analytics Integration for NG-LOG
 
 [![GitHub Actions Status](https://github.com/DagonMetric/ng-log-facebook-analytics/workflows/Main%20Workflow/badge.svg)](https://github.com/DagonMetric/ng-log-facebook-analytics/actions)
-[![npm version](https://img.shields.io/npm/v/@dagonmetric/ng-log-facebook-analytics.svg)](https://www.npmjs.com/package/@dagonmetric/ng-log-facebook-analytics)
+[![npm version](https://badge.fury.io/js/%40dagonmetric%2Fng-log-facebook-analytics.svg)](https://www.npmjs.com/package/@dagonmetric/ng-log-facebook-analytics)
 [![Gitter](https://badges.gitter.im/DagonMetric/general.svg)](https://gitter.im/DagonMetric/general?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-Facebook Pixel Analytics implementation for [DagonMetric/ng-log](https://github.com/DagonMetric/ng-log).
+Facebook Pixel Analytics integration of [DagonMetric/ng-log](https://github.com/DagonMetric/ng-log) for Angular applications.
 
 ## Getting Started
 
 ### Prerequisites
-
-The following npm packages are required before using this module.
-
-* @dagonmetric/ng-log >= v2.2.0 - [npm](https://www.npmjs.com/package/@dagonmetric/ng-log)/[github package](https://github.com/DagonMetric/ng-log-facebook-analytics/packages)
-
-### Add Facebook Pixel or Facebook JavaScript SDK Code Snippet
 
 You can use either Facebook Pixel or Facebook JavaScript SDK to log events.
 
@@ -31,13 +25,13 @@ Copy & paste Facebook sdk code to your site from [acebook SDK for JavaScript](ht
 npm
 
 ```bash
-npm install @dagonmetric/ng-log-facebook-analytics
+npm install @dagonmetric/ng-log @dagonmetric/ng-log-facebook-analytics
 ```
 
 or yarn
 
 ```bash
-yarn add @dagonmetric/ng-log-facebook-analytics
+yarn add @dagonmetric/ng-log @dagonmetric/ng-log-facebook-analytics
 ```
 
 ### Module Setup (app.module.ts)
@@ -58,6 +52,8 @@ import { FacebookAnalyticsLoggerModule } from '@dagonmetric/ng-log-facebook-anal
 export class AppModule { }
 ```
 
+Live edit [app.module.ts in stackblitz](https://stackblitz.com/github/dagonmetric/ng-log-facebook-analytics/tree/master/samples/demo-app?file=src%2Fapp%2Fapp.module.ts)
+
 ### Usage (app.component.ts)
 
 ```typescript
@@ -70,31 +66,31 @@ import { LogService } from '@dagonmetric/ng-log';
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
-  constructor(private readonly _logService: LogService) { }
+  constructor(private readonly logService: LogService) { }
 
   ngOnInit(): void {
     // Track traces
-    this._logService.trace('Testing trace');
-    this._logService.debug('Testing debug');
-    this._logService.info('Testing info');
-    this._logService.warn('Testing warn');
+    this.logService.trace('Testing trace');
+    this.logService.debug('Testing debug');
+    this.logService.info('Testing info');
+    this.logService.warn('Testing warn');
 
     // Track exceptions
-    this._logService.error(new Error('Testing error'));
-    this._logService.fatal(new Error('Testing critical'));
+    this.logService.error(new Error('Testing error'));
+    this.logService.fatal(new Error('Testing critical'));
 
     // Track page view
-    this._logService.trackPageView({
+    this.logService.trackPageView({
       name: 'My Angular App',
       uri: '/home'
     });
 
     // Track page view with timing
-    this._logService.startTrackPage('about');
-    this._logService.stopTrackPage('about', { uri: '/about' });
+    this.logService.startTrackPage('about');
+    this.logService.stopTrackPage('about', { uri: '/about' });
 
     // Track custom event
-    this._logService.trackEvent({
+    this.logService.trackEvent({
       name: 'video_auto_play_start',
       properties: {
         non_interaction: true
@@ -102,32 +98,34 @@ export class AppComponent implements OnInit {
     });
 
     // Track custom event with timing
-    this._logService.startTrackEvent('video_auto_play');
-    this._logService.stopTrackEvent('video_auto_play', {
+    this.logService.startTrackEvent('video_auto_play');
+    this.logService.stopTrackEvent('video_auto_play', {
       properties: {
         non_interaction: true
       }
     });
 
     // Set user properties
-    this._logService.setUserProperties('<Authenticated User Id>', '<Account Id>');
+    this.logService.setUserProperties('<Authenticated User Id>', '<Account Id>');
 
     // Clear user properties
-    this._logService.clearUserProperties();
+    this.logService.clearUserProperties();
   }
 }
 ```
 
+Live edit [app.component.ts in stackblitz](https://stackblitz.com/github/dagonmetric/ng-log-facebook-analytics/tree/master/samples/demo-app?file=src%2Fapp%2Fapp.component.ts)
+
 ## Related Projects
 
-* [ng-log](https://github.com/DagonMetric/ng-log) - Vendor-agnostic logging, analytics and telemetry service abstractions and some implementations
+* [ng-log](https://github.com/DagonMetric/ng-log) - Vendor-agnostic logging, analytics and telemetry service abstractions and some implementations for Angular applications
 * [ng-log-applicationinsights](https://github.com/DagonMetric/ng-log-applicationinsights) - Microsoft Azure Application Insights implementation for `ng-log`
 * [ng-log-firebase-analytics](https://github.com/DagonMetric/ng-log-firebase-analytics) - Firebase Analytics implementation for `ng-log`
 * [ng-log-gtag](https://github.com/DagonMetric/ng-log-gtag) - Angular Google Analytics (gtag.js) logger implementation for `ng-log`
 
 ## Feedback and Contributing
 
-Check out the [Contributing](https://github.com/DagonMetric/ng-log-facebook-analytics/blob/master/CONTRIBUTING.md) page to see the best places to log issues and start discussions.
+Check out the [Contributing](https://github.com/DagonMetric/ng-log-facebook-analytics/blob/master/CONTRIBUTING.md) page.
 
 ## License
 
