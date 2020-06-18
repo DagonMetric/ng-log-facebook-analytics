@@ -16,8 +16,8 @@
     "@angular/platform-browser": "^9.1.11",
     "@angular/platform-browser-dynamic": "^9.1.11",
     "@angular/router": "^9.1.11",
-    "@dagonmetric/ng-log": "^2.2.4",
-    "@dagonmetric/ng-log-facebook-analytics": "^1.0.1",
+    "@dagonmetric/ng-log": "^2.2.5",
+    "@dagonmetric/ng-log-facebook-analytics": "^1.0.2",
     "rxjs": "^6.5.5",
     "tslib": "~1.13.0",
     "zone.js": "^0.10.3"
