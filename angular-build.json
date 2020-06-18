@@ -1,7 +1,8 @@
 {
   "$schema": "./node_modules/@dagonmetric/angular-build/src/schemas/schema.json#",
-  "libs": [{
-    "extends": "ngb:lib-default",
+  "libs": [
+    {
+      "extends": "ngb:lib-default",
       "name": "ng-log-facebook-analytics",
       "root": "modules/ng-log-facebook-analytics",
       "outputPath": "dist/packages/ng-log-facebook-analytics",
@@ -21,6 +22,5 @@
         }
       }
     }
-  ],
-  "apps": []
+  ]
 }
