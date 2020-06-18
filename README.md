@@ -117,6 +117,10 @@ export class AppComponent implements OnInit {
 
 Live edit [app.component.ts in stackblitz](https://stackblitz.com/github/dagonmetric/ng-log-facebook-analytics/tree/master/samples/demo-app?file=src%2Fapp%2Fapp.component.ts)
 
+## Samples
+
+* Demo app [view source](https://github.com/DagonMetric/ng-log-facebook-analytics/tree/master/samples/demo-app) / [live edit in stackblitz](https://stackblitz.com/github/dagonmetric/ng-log-facebook-analytics/tree/master/samples/demo-app)
+
 ## Related Projects
 
 * [ng-log](https://github.com/DagonMetric/ng-log) - Vendor-agnostic logging, analytics and telemetry service abstractions and some implementations for Angular applications
