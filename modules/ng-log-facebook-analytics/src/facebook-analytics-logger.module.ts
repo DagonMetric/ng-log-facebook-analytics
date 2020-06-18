@@ -24,4 +24,4 @@ import { FacebookAnalyticsLoggerProvider } from './facebook-analytics-logger-pro
         }
     ]
 })
-export class FacebookAnalyticsLoggerModule { }
+export class FacebookAnalyticsLoggerModule {}
