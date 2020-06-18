@@ -1,19 +1,17 @@
-// tslint:disable: no-floating-promises
-
 import { LogLevel } from '@dagonmetric/ng-log';
 
 import { FacebookAnalyticsLogger } from '../src/facebook-analytics-logger';
 
-// tslint:disable-next-line: no-any
-declare var window: any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+declare let window: any;
 
 describe('FacebookAnalyticsLogger', () => {
     let logger: FacebookAnalyticsLogger;
-    // tslint:disable-next-line: no-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let fbq: any;
 
     beforeEach(() => {
-        // tslint:disable-next-line: no-unsafe-any
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         window.fbq = fbq = jasmine.createSpy('fbq');
 
         logger = new FacebookAnalyticsLogger('test', {});
@@ -28,6 +26,7 @@ describe('FacebookAnalyticsLogger', () => {
 
         logger.log(LogLevel.Trace, err, { properties });
         expect(fbq).toHaveBeenCalledWith('trackCustom', 'trace', {
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             message: `${err}`,
             level: 'trace',
             key1: 'value1'
@@ -63,28 +62,31 @@ describe('FacebookAnalyticsLogger', () => {
 
         logger.log(LogLevel.Critical, err, { properties });
         expect(fbq).toHaveBeenCalledWith('trackCustom', 'exception', {
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             description: `${err}`,
             fatal: true,
             key1: 'value1'
         });
 
-        // tslint:disable-next-line: no-unsafe-any
-        expect(fbq.calls.count()).toEqual(6);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        void expect(fbq.calls.count()).toEqual(6);
     });
 
     it("should not track 'log' when 'logLevel' is 'None'", () => {
         logger.log(LogLevel.None, 'This is a message.');
 
-        // tslint:disable-next-line: no-unsafe-any
-        expect(fbq.calls.count()).toEqual(0);
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        void expect(fbq.calls.count()).toEqual(0);
     });
 
     it("should work with 'startTrackPage' and 'stopTrackPage'", () => {
         logger.startTrackPage('home');
         logger.stopTrackPage('home');
-        expect(fbq).toHaveBeenCalled();
-        // tslint:disable-next-line: no-unsafe-any
-        expect(fbq.calls.count()).toEqual(1);
+
+        void expect(fbq).toHaveBeenCalled();
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        void expect(fbq.calls.count()).toEqual(1);
     });
 
     it("should work with 'trackPageView'", () => {
@@ -106,8 +108,9 @@ describe('FacebookAnalyticsLogger', () => {
             page_type: 'formPage',
             is_logged_in: false
         });
-        // tslint:disable-next-line: no-unsafe-any
-        expect(fbq.calls.count()).toEqual(1);
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        void expect(fbq.calls.count()).toEqual(1);
     });
 
     it("should log an error when 'startTrackPage' was called more than once for the same event without calling stop", () => {
@@ -116,8 +119,9 @@ describe('FacebookAnalyticsLogger', () => {
         spyOn(console, 'error');
 
         logger.startTrackPage('home1');
-        expect(console.error)
-            .toHaveBeenCalledWith("The 'startTrackPage' was called more than once for this event without calling stop, name: home1.");
+        expect(console.error).toHaveBeenCalledWith(
+            "The 'startTrackPage' was called more than once for this event without calling stop, name: home1."
+        );
     });
 
     it("should log an error when calling 'startTrackPage', 'stopTrackPage' or 'trackPageView' if name could not be detected", () => {
@@ -138,14 +142,17 @@ describe('FacebookAnalyticsLogger', () => {
 
         logger.startTrackPage('home1');
         logger.stopTrackPage('home2');
-        expect(console.error).toHaveBeenCalledWith("The 'stopTrackPage' was called without a corresponding start, name: home2.");
+        expect(console.error).toHaveBeenCalledWith(
+            "The 'stopTrackPage' was called without a corresponding start, name: home2."
+        );
     });
 
     it("should work with 'startTrackEvent' and 'stopTrackEvent'", () => {
         const eventName = 'event1';
         logger.startTrackEvent(eventName);
         logger.stopTrackEvent(eventName);
-        expect(fbq).toHaveBeenCalled();
+
+        void expect(fbq).toHaveBeenCalled();
     });
 
     it("should work with 'trackEvent'", () => {
@@ -158,8 +165,9 @@ describe('FacebookAnalyticsLogger', () => {
         expect(fbq).toHaveBeenCalledWith('trackCustom', 'event1', {
             key1: 'value1'
         });
-        // tslint:disable-next-line: no-unsafe-any
-        expect(fbq.calls.count()).toEqual(1);
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        void expect(fbq.calls.count()).toEqual(1);
     });
 
     it("should log an error when 'startTrackEvent' was called more than once for the same event without calling stop", () => {
@@ -168,8 +176,9 @@ describe('FacebookAnalyticsLogger', () => {
         spyOn(console, 'error');
 
         logger.startTrackEvent('event1');
-        expect(console.error)
-            .toHaveBeenCalledWith("The 'startTrackEvent' was called more than once for this event without calling stop, name: event1.");
+        expect(console.error).toHaveBeenCalledWith(
+            "The 'startTrackEvent' was called more than once for this event without calling stop, name: event1."
+        );
     });
 
     it("should log an error when calling 'stopTrackEvent' without a corresponding start", () => {
@@ -177,6 +186,8 @@ describe('FacebookAnalyticsLogger', () => {
 
         logger.startTrackEvent('event1');
         logger.stopTrackEvent('event2');
-        expect(console.error).toHaveBeenCalledWith("The 'stopTrackEvent' was called without a corresponding start, name: event2.");
+        expect(console.error).toHaveBeenCalledWith(
+            "The 'stopTrackEvent' was called without a corresponding start, name: event2."
+        );
     });
 });
