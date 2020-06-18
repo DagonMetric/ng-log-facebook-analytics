@@ -1,7 +1,7 @@
 {
   "name": "@dagonmetric/ng-log-facebook-analytics",
   "version": "0.0.0-PLACEHOLDER",
-  "description": "Angular Facebook Pixel Analytics implementation for @dagonmetric/ng-log.",
+  "description": "Facebook Pixel Analytics integration of @dagonMetric/ng-log for Angular applications.",
   "author": "DagonMetric",
   "license": "MIT",
   "repository": {
