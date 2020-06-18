@@ -6,14 +6,30 @@
  * found under the LICENSE file in the root directory of this source tree.
  */
 
-import { EventInfo, EventTimingInfo, Logger, LogInfo, LogLevel, PageViewInfo, PageViewTimingInfo } from '@dagonmetric/ng-log';
+import {
+    EventInfo,
+    EventTimingInfo,
+    LogInfo,
+    LogLevel,
+    Logger,
+    PageViewInfo,
+    PageViewTimingInfo
+} from '@dagonmetric/ng-log';
 
 import { UserInfo } from './user-info';
 
 // tslint:disable: no-typeof-undefined no-any no-unsafe-any
 
-declare let fbq: any;
-declare let FB: any;
+declare let fbq: (
+    methodName: 'track' | 'trackCustom',
+    eventName: string | null,
+    properties: { [key: string]: unknown }
+) => void;
+declare let FB: {
+    AppEvents: {
+        logEvent(eventName: string, valueToSum: number | null, parameters: { [key: string]: unknown }): void;
+    };
+};
 
 const facebookStandardEventNames = [
     'AddPaymentInfo',
@@ -39,11 +55,9 @@ const facebookStandardEventNames = [
  * Facebook analytics implementation for `Logger`.
  */
 export class FacebookAnalyticsLogger extends Logger {
-    private readonly _eventTiming: Map<string, number> = new Map<string, number>();
+    private readonly eventTiming: Map<string, number> = new Map<string, number>();
 
-    constructor(
-        readonly name: string,
-        private readonly _userInfo: UserInfo) {
+    constructor(readonly name: string, private readonly userInfo: UserInfo) {
         super();
     }
 
@@ -53,17 +67,18 @@ export class FacebookAnalyticsLogger extends Logger {
         }
 
         // tslint:disable-next-line: no-any
-        const properties: { [key: string]: any } = logInfo && logInfo.properties ? { ...logInfo.properties } : {};
+        const properties: { [key: string]: unknown } = logInfo && logInfo.properties ? { ...logInfo.properties } : {};
 
-        if (this._userInfo.userId) {
-            properties.user_id = this._userInfo.userId;
+        if (this.userInfo.userId) {
+            properties.user_id = this.userInfo.userId;
         }
 
-        if (this._userInfo.accountId) {
-            properties.account_id = this._userInfo.accountId;
+        if (this.userInfo.accountId) {
+            properties.account_id = this.userInfo.accountId;
         }
 
         if (logLevel === LogLevel.Error || logLevel === LogLevel.Critical) {
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             properties.description = typeof message === 'string' ? message : `${message}`;
             properties.fatal = logLevel === LogLevel.Critical;
 
@@ -84,6 +99,7 @@ export class FacebookAnalyticsLogger extends Logger {
                 level = 'warn';
             }
 
+            // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
             properties.message = typeof message === 'string' ? message : `${message}`;
             properties.level = level;
 
@@ -106,13 +122,15 @@ export class FacebookAnalyticsLogger extends Logger {
             return;
         }
 
-        if (this._eventTiming.get(name) != null) {
-            console.error(`The 'startTrackPage' was called more than once for this event without calling stop, name: ${name}.`);
+        if (this.eventTiming.get(name) != null) {
+            console.error(
+                `The 'startTrackPage' was called more than once for this event without calling stop, name: ${name}.`
+            );
 
             return;
         }
 
-        this._eventTiming.set(name, +new Date());
+        this.eventTiming.set(name, +new Date());
     }
 
     stopTrackPage(name?: string, pageViewInfo?: PageViewTimingInfo): void {
@@ -126,14 +144,14 @@ export class FacebookAnalyticsLogger extends Logger {
             return;
         }
 
-        const start = this._eventTiming.get(name);
+        const start = this.eventTiming.get(name);
         if (start == null || isNaN(start)) {
             console.error(`The 'stopTrackPage' was called without a corresponding start, name: ${name}.`);
 
             return;
         }
 
-        this._eventTiming.delete(name);
+        this.eventTiming.delete(name);
 
         const duration = Math.max(+new Date() - start, 0);
         const properties = this.getMappedPageViewProps(pageViewInfo);
@@ -161,31 +179,33 @@ export class FacebookAnalyticsLogger extends Logger {
     }
 
     startTrackEvent(name: string): void {
-        if (this._eventTiming.get(name) != null) {
-            console.error(`The 'startTrackEvent' was called more than once for this event without calling stop, name: ${name}.`);
+        if (this.eventTiming.get(name) != null) {
+            console.error(
+                `The 'startTrackEvent' was called more than once for this event without calling stop, name: ${name}.`
+            );
 
             return;
         }
 
-        this._eventTiming.set(name, +new Date());
+        this.eventTiming.set(name, +new Date());
     }
 
     stopTrackEvent(name: string, eventInfo?: EventTimingInfo): void {
-        const start = this._eventTiming.get(name);
+        const start = this.eventTiming.get(name);
         if (start == null || isNaN(start)) {
             console.error(`The 'stopTrackEvent' was called without a corresponding start, name: ${name}.`);
 
             return;
         }
 
-        this._eventTiming.delete(name);
+        this.eventTiming.delete(name);
 
         const duration = Math.max(+new Date() - start, 0);
         const properties = this.getMappedEventProps(eventInfo);
         properties.duration = duration;
 
         if (typeof fbq !== 'undefined') {
-            const foundStandardName = facebookStandardEventNames.find(e => e.toUpperCase() === name.toUpperCase());
+            const foundStandardName = facebookStandardEventNames.find((e) => e.toUpperCase() === name.toUpperCase());
             if (foundStandardName) {
                 fbq('track', foundStandardName, properties);
             } else {
@@ -200,7 +220,9 @@ export class FacebookAnalyticsLogger extends Logger {
         const properties = this.getMappedEventProps(eventInfo);
 
         if (typeof fbq !== 'undefined') {
-            const foundStandardName = facebookStandardEventNames.find(e => e.toUpperCase() === eventInfo.name.toUpperCase());
+            const foundStandardName = facebookStandardEventNames.find(
+                (e) => e.toUpperCase() === eventInfo.name.toUpperCase()
+            );
             if (foundStandardName) {
                 fbq('track', foundStandardName, properties);
             } else {
@@ -215,33 +237,33 @@ export class FacebookAnalyticsLogger extends Logger {
         // Do nothing
     }
 
-    private getMappedEventProps(eventInfo?: EventTimingInfo): { [key: string]: any } {
+    private getMappedEventProps(eventInfo?: EventTimingInfo): { [key: string]: unknown } {
         if (!eventInfo) {
             return {};
         }
 
-        const mappedProps: { [key: string]: any } = {
+        const mappedProps: { [key: string]: unknown } = {
             ...eventInfo.properties,
             ...eventInfo.measurements
         };
 
-        if (this._userInfo.userId) {
-            mappedProps.user_id = this._userInfo.userId;
+        if (this.userInfo.userId) {
+            mappedProps.user_id = this.userInfo.userId;
         }
 
-        if (this._userInfo.accountId) {
-            mappedProps.account_id = this._userInfo.accountId;
+        if (this.userInfo.accountId) {
+            mappedProps.account_id = this.userInfo.accountId;
         }
 
         return mappedProps;
     }
 
-    private getMappedPageViewProps(pageViewInfo?: PageViewTimingInfo): { [key: string]: any } {
+    private getMappedPageViewProps(pageViewInfo?: PageViewTimingInfo): { [key: string]: unknown } {
         if (!pageViewInfo) {
             return {};
         }
 
-        const mappedProps: { [key: string]: any } = {
+        const mappedProps: { [key: string]: unknown } = {
             ...pageViewInfo.properties,
             ...pageViewInfo.measurements
         };
@@ -266,12 +288,12 @@ export class FacebookAnalyticsLogger extends Logger {
             mappedProps.is_logged_in = pageViewInfo.is_logged_in;
         }
 
-        if (this._userInfo.userId) {
-            mappedProps.user_id = this._userInfo.userId;
+        if (this.userInfo.userId) {
+            mappedProps.user_id = this.userInfo.userId;
         }
 
-        if (this._userInfo.accountId) {
-            mappedProps.account_id = this._userInfo.accountId;
+        if (this.userInfo.accountId) {
+            mappedProps.account_id = this.userInfo.accountId;
         }
 
         return mappedProps;
