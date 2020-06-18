@@ -18,8 +18,6 @@ import {
 
 import { UserInfo } from './user-info';
 
-// tslint:disable: no-typeof-undefined no-any no-unsafe-any
-
 declare let fbq: (
     methodName: 'track' | 'trackCustom',
     eventName: string | null,
@@ -66,7 +64,6 @@ export class FacebookAnalyticsLogger extends Logger {
             return;
         }
 
-        // tslint:disable-next-line: no-any
         const properties: { [key: string]: unknown } = logInfo && logInfo.properties ? { ...logInfo.properties } : {};
 
         if (this.userInfo.userId) {
