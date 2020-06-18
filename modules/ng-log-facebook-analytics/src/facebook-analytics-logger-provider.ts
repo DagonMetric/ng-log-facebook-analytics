@@ -11,10 +11,10 @@ import { Injectable } from '@angular/core';
 import {
     EventInfo,
     EventTimingInfo,
-    Logger,
-    LoggerProvider,
     LogInfo,
     LogLevel,
+    Logger,
+    LoggerProvider,
     PageViewInfo,
     PageViewTimingInfo
 } from '@dagonmetric/ng-log';
@@ -26,26 +26,24 @@ import { UserInfo } from './user-info';
  * Logger provider factory for `FacebookAnalyticsLogger`.
  */
 @Injectable({
-    providedIn: 'root'
+    providedIn: 'any'
 })
 export class FacebookAnalyticsLoggerProvider extends Logger implements LoggerProvider {
-    private _currentLogger?: FacebookAnalyticsLogger;
-    private readonly _userInfo: UserInfo = {};
+    private currentLoggerInternal?: FacebookAnalyticsLogger;
+    private readonly userInfo: UserInfo = {};
 
     get name(): string {
         return 'facebookAnalytics';
     }
 
     get currentLogger(): FacebookAnalyticsLogger {
-        if (this._currentLogger) {
-            return this._currentLogger;
+        if (this.currentLoggerInternal) {
+            return this.currentLoggerInternal;
         }
 
-        this._currentLogger = new FacebookAnalyticsLogger(
-            '',
-            this._userInfo);
+        this.currentLoggerInternal = new FacebookAnalyticsLogger('', this.userInfo);
 
-        return this._currentLogger;
+        return this.currentLoggerInternal;
     }
 
     constructor() {
@@ -53,19 +51,17 @@ export class FacebookAnalyticsLoggerProvider extends Logger implements LoggerPro
     }
 
     createLogger(category: string): Logger {
-        return new FacebookAnalyticsLogger(
-            category,
-            this._userInfo);
+        return new FacebookAnalyticsLogger(category, this.userInfo);
     }
 
     setUserProperties(userId: string, accountId?: string): void {
-        this._userInfo.userId = userId;
-        this._userInfo.accountId = accountId;
+        this.userInfo.userId = userId;
+        this.userInfo.accountId = accountId;
     }
 
     clearUserProperties(): void {
-        this._userInfo.userId = undefined;
-        this._userInfo.accountId = undefined;
+        this.userInfo.userId = undefined;
+        this.userInfo.accountId = undefined;
     }
 
     log(logLevel: LogLevel, message: string | Error, logInfo?: LogInfo): void {
