@@ -1,7 +1,6 @@
 # Angular Facebook Pixel Analytics Implementation for NG-LOG
 
 [![GitHub Actions Status](https://github.com/DagonMetric/ng-log-facebook-analytics/workflows/Main%20Workflow/badge.svg)](https://github.com/DagonMetric/ng-log-facebook-analytics/actions)
-[![Azure Pipelines Status](https://dev.azure.com/DagonMetric/ng-log-facebook-analytics/_apis/build/status/DagonMetric.ng-log-facebook-analytics?branchName=master)](https://dev.azure.com/DagonMetric/ng-log-facebook-analytics/_build/latest?definitionId=15&branchName=master)
 [![npm version](https://img.shields.io/npm/v/@dagonmetric/ng-log-facebook-analytics.svg)](https://www.npmjs.com/package/@dagonmetric/ng-log-facebook-analytics)
 [![Gitter](https://badges.gitter.im/DagonMetric/general.svg)](https://gitter.im/DagonMetric/general?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
