@@ -1,0 +1,42 @@
+{
+    "$schema": "./node_modules/lib-tools/schemas/schema.json",
+    "projects": {
+      "ng-log-facebook-analytics": {
+        "root": "modules/ng-log-facebook-analytics",
+        "tasks": {
+          "build": {
+            "outputPath": "../../dist/packages/ng-log-facebook-analytics",
+            "script": {
+              "compilations": "auto",
+              "umdId": "ngLog.facebookAnalytics",
+              "externals": {
+                "@dagonmetric/ng-log": "ngLog"
+              }
+            }
+          },
+          "test": {
+            "testIndexFile": "test.ts",
+            "tsConfig": "tsconfig.test.json",
+            "envOverrides": {
+              "ci": {
+                "codeCoverageExclude": [
+                  "**/test.ts",
+                  "**/index.ts",
+                  "**/public_api.ts"
+                ],
+                "reporters": [
+                  "junit",
+                  "coverage-istanbul"
+                ],
+                "browsers": [
+                  "ChromeHeadlessCI"
+                ],
+                "singleRun": true
+              }
+            }
+          }
+        }
+      }      
+    }
+  }
+  
