@@ -2,6 +2,7 @@
 
 | Date (UTC) | Version |  |  |
 | :-- | :-- | :--: | :-- |
+2021-01-03 | 1.1.2 | [release notes](v1.1.2/README.md)/[npm](https://www.npmjs.com/package/@dagonmetric/ng-log-facebook-analytics/v/1.1.2) | - |
 2020-10-01 | 1.1.1 | [release notes](v1.1.1/README.md)/[npm](https://www.npmjs.com/package/@dagonmetric/ng-log-facebook-analytics/v/1.1.1) | - |
 2020-09-25 | 1.1.0 | [release notes](v1.1.0/README.md)/[npm](https://www.npmjs.com/package/@dagonmetric/ng-log-facebook-analytics/v/1.1.0) | - |
 2020-06-25 | 1.0.3 | [release notes](v1.0.3/README.md)/[npm](https://www.npmjs.com/package/@dagonmetric/ng-log-facebook-analytics/v/1.0.3) | - |
